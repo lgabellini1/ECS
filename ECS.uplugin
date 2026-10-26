@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "ECS",
+	"Description": "",
+	"Category": "Other",
+	"CreatedBy": "Luca Gabellini",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": false,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "ECS",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
