@@ -1,0 +1,18 @@
+﻿{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "1.0",
+  "FriendlyName": "ECS",
+  "Description": "",
+  "Category": "Gameplay",
+  "CreatedBy": "Luca Gabellini",
+  "CanContainContent": false,
+  "IsBetaVersion": false,
+  "Modules": [
+    {
+      "Name": "ECS",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    }
+  ]
+}
