@@ -6,8 +6,14 @@
   "Description": "",
   "Category": "Gameplay",
   "CreatedBy": "Luca Gabellini",
+  "CreatedByURL": "",
+  "DocsURL": "",
+  "MarketplaceURL": "",
+  "SupportURL": "",
   "CanContainContent": false,
   "IsBetaVersion": false,
+  "IsExperimentalVersion": false,
+  "Installed": true,
   "Modules": [
     {
       "Name": "ECS",
