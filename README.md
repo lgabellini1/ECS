@@ -14,7 +14,7 @@ It is **not** meant to be a complete, ready-to-work ECS library; as such, there 
 5. Restart the editor.
 
 ## Usage
-Here an example on how to write a game system which moves focus on the nearest interactable object with this plugin:
+Here's an example on how to write a game system which moves focus on the nearest interactable object:
 ```cpp
 class FFocusSystem : public ECS::ISystem
 {
@@ -39,7 +39,7 @@ public:
   }
 };
 ```
-Then, user-defined system can be registered for usage like this:
+Then, user-defined systems can be registered for usage like this:
 ```cpp
 void RegisterSystems(ECS::FSystemRegistrar& Registrar)
 {
