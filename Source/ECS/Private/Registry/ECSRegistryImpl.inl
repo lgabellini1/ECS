@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "ECSRegistryImpl.h"
-#include "Runtime/Datasmith/CADKernel/Base/Public/Core/Types.h"
 
 namespace ECS
 {
