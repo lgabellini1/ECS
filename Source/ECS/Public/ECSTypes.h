@@ -8,7 +8,7 @@ namespace ECS
 	concept component = std::is_trivially_copyable_v<T> && std::default_initializable<T> &&
 		std::is_move_assignable_v<T> && (!std::is_const_v<T>) && (!std::is_reference_v<T>);
 
-	class FEntity
+	class ECS_API FEntity
 	{
 	public:
 		FEntity();
@@ -29,14 +29,14 @@ namespace ECS
 
 	static_assert(sizeof(FEntity) == 4);
 
-	class IStorage
+	class ECS_API IStorage
 	{
 	public:
 		virtual ~IStorage() = default;
 		virtual void Remove(FEntity) = 0;
 	};
 
-	class ISystem
+	class ECS_API ISystem
 	{
 	public:
 		virtual ~ISystem() = default;

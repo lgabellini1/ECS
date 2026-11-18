@@ -41,7 +41,7 @@ namespace ECS
 			Dense.RemoveAtSwap(Slot);
 			Components.RemoveAtSwap(Slot);
 			
-			Sparse[Last.Index()] = FEntity(Slot, Entity.Generation());
+			Sparse[Last.Index()] = FEntity(Slot, Last.Generation());
 			Sparse[i] = FEntity::Null;
 
 			check(Dense.Num() == Components.Num());

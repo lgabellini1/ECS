@@ -13,7 +13,7 @@ namespace ECS
 		(Generation & EntityGenerationMask) << EntityIndexBits | (Index & EntityIndexMask))
 	{
 	#if WITH_EDITOR
-		check(Index < EntityIndexMask);
+		check(Index <= EntityIndexMask);
 	#endif
 	}
 	

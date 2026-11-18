@@ -21,8 +21,8 @@ namespace ECS
 
 	DECLARE_DELEGATE_OneParam(FSystemsProvider, FSystemRegistrar&);
 
-	FDelegateHandle RegisterSystemsProvider(FSystemsProvider);
-	void UnregisterSystemsProvider(FDelegateHandle);
+	ECS_API FDelegateHandle RegisterSystemsProvider(FSystemsProvider);
+	ECS_API void UnregisterSystemsProvider(FDelegateHandle);
 }
 
 #include "ECSSystemRegistration.inl"

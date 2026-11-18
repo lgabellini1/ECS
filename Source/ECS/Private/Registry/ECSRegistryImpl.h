@@ -30,3 +30,5 @@ namespace ECS
 		FComponentManager Components;
 	};
 }
+
+#include "ECSRegistryImpl.inl"

@@ -9,7 +9,7 @@ namespace ECS
 	class IStorage;
 	class FRegistryImpl;
 	
-	class FRegistry final
+	class ECS_API FRegistry final
 	{
 		// private subsystem has access to both the public view and internal impl,
 		// so that it can dispatch calls to one or the other according to necessity.

@@ -26,3 +26,5 @@ namespace ECS
 		TArray<TUniquePtr<IStorage>> Storages;
 	};
 }
+
+#include "ECSComponentManager.inl"

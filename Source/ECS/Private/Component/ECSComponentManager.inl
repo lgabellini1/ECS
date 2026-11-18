@@ -20,7 +20,7 @@ namespace ECS
 		}
 
 		auto& Storage = static_cast<TComponentStorage<T>&>(
-			Storages[Type].Get()
+			*Storages[Type].Get()
 		);
 		return Storage.Add(Entity, Component);
 	}
