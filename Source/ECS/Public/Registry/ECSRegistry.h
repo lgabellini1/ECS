@@ -16,20 +16,25 @@ namespace ECS
 		friend class UECSSubsystem;
 		
 	public:
-		FRegistry() = default;
+		FRegistry();
 		explicit FRegistry(TPimplPtr<FRegistryImpl>&&);
 
 		FRegistry(const FRegistry&)			   = delete;
 		FRegistry& operator=(const FRegistry&) = delete;
 
-		FEntity Create();
-		void    Destroy(FEntity);
+		[[nodiscard]] FEntity Create();
+		void Destroy(FEntity);
+		bool IsAlive(FEntity) const;
+
+		template <component T>
+		void Remove(FEntity);
 		
 		template <component T>
 		TComponentStorage<T>* GetStorage() const;
 	private:
 		TPimplPtr<FRegistryImpl> Impl;
 		
+		void RemoveInternal(FEntity, uint32 TypeId);
 		IStorage* GetStorageInternal(uint32 TypeId) const;
 	};
 }

@@ -9,8 +9,24 @@ namespace ECS
 
 	void FRegistryImpl::Destroy(FEntity Entity)
 	{
-		Entities.Destroy(Entity);
-		Components.RemoveFromAllStorages(Entity);
+		if (IsAlive(Entity))
+		{
+			Entities.Destroy(Entity);
+			Components.RemoveFromAllStorages(Entity);	
+		}
+	}
+
+	bool FRegistryImpl::IsAlive(FEntity Entity) const
+	{
+		return Entities.IsAlive(Entity);
+	}
+
+	void FRegistryImpl::Remove(FEntity Entity, uint32 TypeId)
+	{
+		if (IsAlive(Entity))
+		{
+			Components.RemoveFromStorage(Entity, TypeId);
+		}
 	}
 	
 	IStorage* FRegistryImpl::GetStorage(uint32 TypeId) const

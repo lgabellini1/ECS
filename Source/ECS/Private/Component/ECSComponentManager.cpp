@@ -2,11 +2,19 @@
 
 namespace ECS
 {
+	void FComponentManager::RemoveFromStorage(FEntity Entity, uint32 TypeId)
+	{
+		if (auto* Storage = GetStorage(TypeId))
+		{
+			Storage->Remove(Entity);
+		}
+	}
+	
 	void FComponentManager::RemoveFromAllStorages(FEntity Entity)
 	{
 		for (const auto& Storage : Storages)
 		{
-			Storage->Remove(Entity);
+			if (Storage.Get()) Storage->Remove(Entity);
 		}
 	}
 	

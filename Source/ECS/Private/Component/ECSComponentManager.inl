@@ -26,15 +26,6 @@ namespace ECS
 	}
 
 	template <component T>
-	void FComponentManager::RemoveFromStorage(FEntity Entity)
-	{
-		if (auto* Storage = GetStorage(TypeId<T>()))
-		{
-			Storage->Remove(Entity);
-		}
-	}
-
-	template <component T>
 	T* FComponentManager::Get(FEntity Entity)
 	{
 		IStorage* Storage = GetStorage(TypeId<T>());
@@ -46,7 +37,9 @@ namespace ECS
 	template <component T>
 	bool FComponentManager::Has(FEntity Entity)
 	{
-		const TComponentStorage<T>* Storage = GetStorage(TypeId<T>());
+		auto Storage = static_cast<const TComponentStorage<T>*>(
+			GetStorage(TypeId<T>())
+		);
 		return Storage && Storage->Has(Entity);
 	}
 }

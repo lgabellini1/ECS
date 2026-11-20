@@ -11,13 +11,13 @@ namespace ECS
 			Next = Entities[i];
 			--Available;
 			
-			FEntity Recycled = FEntity(i, Entities[i].Generation());
+			const FEntity Recycled = FEntity(i, Entities[i].Generation());
 			Entities[i] = Recycled;
 			return Recycled;
 		}
 		else
 		{
-			FEntity New = FEntity(static_cast<uint32>(Entities.Num()), 0);
+			const FEntity New(static_cast<uint32>(Entities.Num()), 0);
 			Entities.Add(New);
 			return New;
 		}
@@ -38,6 +38,8 @@ namespace ECS
 	bool FEntityManager::IsAlive(FEntity Entity) const
 	{
 		const uint32 i = Entity.Index();
-		return i < static_cast<uint32>(Entities.Num()) && Entities[i] == Entity;
+		return i < static_cast<uint32>(Entities.Num())
+			&& Entities[i] == Entity
+			&& !Entity.IsNull();
 	}
 }

@@ -6,12 +6,15 @@ namespace ECS
 	class FComponentManager
 	{
 	public:
+		FComponentManager() = default;
+
+		FComponentManager(const FComponentManager&)			   = delete;
+		FComponentManager& operator=(const FComponentManager&) = delete;
+		
 		template <component T>
 		T& AddToStorage(FEntity, T Component = T());
 		
-		template <component T>
-		void RemoveFromStorage(FEntity);
-
+		void RemoveFromStorage(FEntity, uint32 TypeId);
 		void RemoveFromAllStorages(FEntity);
 
 		template <component T>

@@ -32,9 +32,10 @@ namespace ECS
 	template <component T>
 	void TComponentStorage<T>::Remove(FEntity Entity)
 	{
-		const uint32 i = Entity.Index();
 		if (Has(Entity))
 		{
+			const uint32 i = Entity.Index();
+			
 			const uint32 Slot  = Sparse[i].Index();
 			const FEntity Last = Dense.Last();
 			
@@ -51,6 +52,8 @@ namespace ECS
 	template <component T>
 	bool TComponentStorage<T>::Has(FEntity Entity) const
 	{
+		if (Entity.IsNull()) return false;
+		
 		const uint32 i = Entity.Index();
 		if (i >= static_cast<uint32>(Sparse.Num()))
 		{
