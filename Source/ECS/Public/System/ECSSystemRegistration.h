@@ -23,6 +23,7 @@ namespace ECS
 
 	ECS_API FDelegateHandle RegisterSystemsProvider(FSystemsProvider);
 	ECS_API void UnregisterSystemsProvider(FDelegateHandle);
+	ECS_API void ForEachProvider(TFunctionRef<void(const FSystemsProvider&)> Fn);
 }
 
 #include "ECSSystemRegistration.inl"

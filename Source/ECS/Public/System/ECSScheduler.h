@@ -5,7 +5,7 @@ namespace ECS
 {
 	class ISystem;
 	
-	class FScheduler
+	class ECS_API FScheduler
 	{
 	public:
 		FScheduler() = default;

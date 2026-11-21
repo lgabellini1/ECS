@@ -8,21 +8,9 @@ namespace ECS
 	template <component T>
 	T& FComponentManager::AddToStorage(FEntity Entity, T Component)
 	{
-		const uint32 Type = TypeId<T>();
-		if (Storages.Num() <= static_cast<int32>(Type))
-		{
-			Storages.SetNum(static_cast<int32>(Type) + 1);
-		}
-
-		if (!Storages[Type])
-		{
-			Storages[Type] = MakeUnique<TComponentStorage<T>>();
-		}
-
 		auto& Storage = static_cast<TComponentStorage<T>&>(
-			*Storages[Type].Get()
-		);
-		return Storage.Add(Entity, Component);
+			GetOrCreateStorage(TypeId<T>(), &TComponentStorage<T>::Make));
+		return Storage.Add(Entity, MoveTemp(Component));
 	}
 
 	template <component T>
@@ -35,7 +23,7 @@ namespace ECS
 	}
 
 	template <component T>
-	bool FComponentManager::Has(FEntity Entity)
+	bool FComponentManager::Has(FEntity Entity) const
 	{
 		auto Storage = static_cast<const TComponentStorage<T>*>(
 			GetStorage(TypeId<T>())

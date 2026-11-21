@@ -33,4 +33,9 @@ namespace ECS
 	{
 		return Components.GetStorage(TypeId);
 	}
+
+	IStorage& FRegistryImpl::GetOrCreateStorage(uint32 TypeId, FStorageFactory Factory)
+	{
+		return Components.GetOrCreateStorage(TypeId, Factory);
+	}
 }

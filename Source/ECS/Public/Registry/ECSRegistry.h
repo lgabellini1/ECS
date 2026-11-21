@@ -27,15 +27,21 @@ namespace ECS
 		bool IsAlive(FEntity) const;
 
 		template <component T>
+		T& Add(FEntity, T Component = T());
+
+		template <component T>
 		void Remove(FEntity);
+
+		template <component T>
+		T* Get(FEntity);
 		
 		template <component T>
 		TComponentStorage<T>* GetStorage() const;
 	private:
 		TPimplPtr<FRegistryImpl> Impl;
 		
-		void RemoveInternal(FEntity, uint32 TypeId);
 		IStorage* GetStorageInternal(uint32 TypeId) const;
+		IStorage& GetOrCreateStorageInternal(uint32 TypeId, FStorageFactory Factory);
 	};
 }
 

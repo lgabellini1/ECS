@@ -33,6 +33,7 @@ namespace ECS
 		T* Get(FEntity);
 		
 		IStorage* GetStorage(uint32 TypeId) const;
+		IStorage& GetOrCreateStorage(uint32 TypeId, FStorageFactory);
 	private:
 		FEntityManager    Entities;
 		FComponentManager Components;

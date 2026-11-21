@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "ECSTypes.h"
+#include "Storage/ECSComponentStorage.h"
 
 namespace ECS
 {
@@ -18,12 +19,13 @@ namespace ECS
 		void RemoveFromAllStorages(FEntity);
 
 		template <component T>
-		bool Has(FEntity);
+		bool Has(FEntity) const;
 
 		template <component T>
 		T* Get(FEntity);
-		
+
 		IStorage* GetStorage(uint32 TypeId) const;
+		IStorage& GetOrCreateStorage(uint32 TypeId, FStorageFactory);  
 	private:
 		// ptr-to-base-interface pattern required because the set of types is open-ended
 		TArray<TUniquePtr<IStorage>> Storages;

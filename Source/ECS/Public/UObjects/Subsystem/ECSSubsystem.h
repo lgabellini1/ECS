@@ -2,7 +2,6 @@
 #include "CoreMinimal.h"
 #include "ECSTypes.h"
 #include "Registry/ECSRegistry.h"
-#include "Registry/ECSRegistryImpl.h"
 #include "System/ECSScheduler.h"
 #include "ECSSubsystem.generated.h"
 
@@ -33,11 +32,11 @@ private:
 template <ECS::component T>
 T* UECSSubsystem::AddComponentToEntity(ECS::FEntity	Entity, T Component)
 {
-	return Registry.Impl->Add<T>(Entity, Component);
+	return Registry.Add<T>(Entity, Component);
 }
 
 template <ECS::component T>
 T* UECSSubsystem::GetComponent(ECS::FEntity Entity)
 {
-	return Registry.Impl->Get<T>(Entity);
+	return Registry.Get<T>(Entity);
 }

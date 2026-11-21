@@ -12,9 +12,7 @@ namespace ECS
 	FEntity::FEntity(uint32 Index, uint32 Generation) : Id(
 		(Generation & EntityGenerationMask) << EntityIndexBits | (Index & EntityIndexMask))
 	{
-	#if WITH_EDITOR
 		check(Index <= EntityIndexMask);
-	#endif
 	}
 	
 	uint32 FEntity::Index() const
