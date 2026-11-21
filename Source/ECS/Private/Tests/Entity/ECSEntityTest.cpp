@@ -10,9 +10,19 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FEntityTest_DefaultIsNull,
 bool FEntityTest_DefaultIsNull::RunTest(const FString& Parameters)
 {
 	const FEntity Default;
+	TestEqual(TEXT("Null constructs well"),
+		FEntity(NullEntityIndex, 0).Index(),NullEntityIndex);
 	TestTrue(TEXT("Default entity is null"), Default.IsNull());
 	TestTrue(TEXT("Default entity equals null handle"), Default == FEntity::Null);
-	TestTrue(TEXT("Null entity ID constructs null"), FEntity(NullEntityId).IsNull());
+
+	bool bAllNull = true;
+	for (uint32 i = 0; i < EntityGenerationMask; ++i)
+	{
+		if (!FEntity(NullEntityIndex, i).IsNull())
+			bAllNull = false;
+	}
+	TestTrue(TEXT("Null entity index always constructs null"), bAllNull);
+	
 	return true;
 }
 

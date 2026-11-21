@@ -1,8 +1,33 @@
 #include "Tests/ECSTestCommons.h"
 #include "Algo/Contains.h"
 #include "Storage/ECSComponentStorage.h"
+#include "Entity/ECSEntityConsts.h"
 
 using namespace ECS;
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FComponentStorage_HasRefusesNullForAnyGeneration,
+	"ECS::ComponentStorage::HasRefusesNullForAnyGeneration", TestFlags);
+
+bool FComponentStorage_HasRefusesNullForAnyGeneration::RunTest(const FString& Parameters)
+{
+	TComponentStorage<FTestComponentInt> Storage;
+	const FEntity Entity = FEntity(1024, 0);
+	Storage.Add(Entity);
+	
+	bool bAllFalse = true;
+	for (uint32 i = 0; i < EntityGenerationMask; ++i)
+	{
+		if (const FEntity TestNull = FEntity(NullEntityIndex, i);
+			Storage.Has(TestNull))
+		{
+			bAllFalse = false;	
+		}
+	}
+
+	TestTrue(TEXT("Has() refuses null for any generation"), bAllFalse);
+	
+	return true;
+}
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FComponentStorage_Compaction,
 	"ECS::ComponentStorage::Compaction", TestFlags)

@@ -52,13 +52,10 @@ namespace ECS
 	template <component T>
 	bool TComponentStorage<T>::Has(FEntity Entity) const
 	{
-		if (Entity.IsNull()) return false;
-		
 		const uint32 i = Entity.Index();
+
 		if (i >= static_cast<uint32>(Sparse.Num()))
-		{
 			return false;
-		}
 
 		const FEntity Slot = Sparse[i];
 		return !Slot.IsNull() && Slot.Generation() == Entity.Generation();

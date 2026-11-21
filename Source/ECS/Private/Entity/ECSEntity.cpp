@@ -25,7 +25,7 @@ namespace ECS
 		return (Id >> EntityIndexBits) & EntityGenerationMask;
 	}
 
-	constexpr FEntity FEntity::Null = FEntity(NullEntityId);
+	const FEntity FEntity::Null	= FEntity(NullEntityIndex, 0);
 
 	bool FEntity::IsNull() const
 	{

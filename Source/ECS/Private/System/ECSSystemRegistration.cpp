@@ -1,5 +1,4 @@
 ﻿#include "System/ECSSystemRegistration.h"
-#include "ECSSystemRegistrationInternal.h"
 
 namespace ECS
 {

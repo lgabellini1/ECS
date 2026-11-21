@@ -1,6 +1,5 @@
 ﻿#include "UObjects/Subsystem/ECSSubsystem.h"
 #include "System/ECSSystemRegistration.h"
-#include "System/ECSSystemRegistrationInternal.h"
 
 void UECSSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
