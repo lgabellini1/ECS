@@ -33,7 +33,13 @@ namespace ECS
 		void Remove(FEntity);
 
 		template <component T>
+		bool Has(FEntity);
+
+		template <component T>
 		T* Get(FEntity);
+
+		template <component T>
+		T& GetChecked(FEntity);
 		
 		template <component T>
 		TComponentStorage<T>* GetStorage() const;

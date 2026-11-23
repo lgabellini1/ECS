@@ -27,10 +27,25 @@ namespace ECS
 	}
 
 	template <component T>
+	bool FRegistry::Has(FEntity Entity)
+	{
+		auto*  Storage = GetStorage<T>();
+		return Storage ? Storage->Has(Entity) : false;
+	}
+
+	template <component T>
 	T* FRegistry::Get(FEntity Entity)
 	{
 		auto*  Storage = GetStorage<T>();
 		return Storage ? Storage->Get(Entity) : nullptr;
+	}
+
+	template <component T>
+	T& FRegistry::GetChecked(FEntity Entity)
+	{
+		T* Component = Get<T>(Entity);
+		check  (Component);
+		return *Component;
 	}
 	
 	template <component T>
