@@ -13,6 +13,9 @@ namespace ECS
 	public:
 		virtual ~IStorage() = default;
 		virtual void Remove(FEntity) = 0;
+		
+		virtual int32  Num() const = 0;
+		virtual SIZE_T Size() const = 0;
 	};
 
 	struct FComponentKey

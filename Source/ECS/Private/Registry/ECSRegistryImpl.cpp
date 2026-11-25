@@ -28,6 +28,11 @@ namespace ECS
 			Components.RemoveFromStorage(Entity, Key);
 		}
 	}
+
+	int32 FRegistryImpl::NumEntities() const
+	{
+		return Entities.GetLivingCount();
+	}
 	
 	IStorage* FRegistryImpl::GetStorage(FComponentKey Key) const
 	{
@@ -37,5 +42,10 @@ namespace ECS
 	IStorage& FRegistryImpl::GetOrCreateStorage(FComponentKey Key, FStorageFactory Factory)
 	{
 		return Components.GetOrCreateStorage(Key, Factory);
+	}
+
+	void FRegistryImpl::ForEachStorage(TFunctionRef<void(const FComponentKey&, const IStorage&)> Func) const
+	{
+		Components.ForEachStorage(Func);
 	}
 }

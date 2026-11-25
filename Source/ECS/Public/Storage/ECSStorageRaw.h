@@ -16,13 +16,16 @@ namespace ECS
 		void* GetRaw(FEntity);
 		bool  Has(FEntity) const;
 
-		int32 Num() const { return Set.Num(); }
+		virtual int32 Num() const override { return Set.Num(); }
 		const TArray<FEntity>& Entities() const { return Set.Entities(); }
+
+		virtual SIZE_T Size() const override { return Set.Size() + Bytes.GetAllocatedSize(); }
 	private:
 		uint8* SlotInternal(int32 Index);
 
 		FComponentOps Ops;
 		FSparseSet    Set;
+		// Component memory payload 
 		TArray<uint8, TAlignedHeapAllocator<16>> Bytes;
 	};
 }

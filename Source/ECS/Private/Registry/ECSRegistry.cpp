@@ -31,6 +31,12 @@ namespace ECS
 		return Impl->IsAlive(Entity);
 	}
 
+	int32 FRegistry::NumEntities() const
+	{
+		check (Impl.IsValid());
+		return Impl->NumEntities();
+	}
+
 	IStorage* FRegistry::GetStorageInternal(FComponentKey Key) const
 	{
 		check (Impl.IsValid());
@@ -41,5 +47,11 @@ namespace ECS
 	{
 		check (Impl.IsValid());
 		return Impl->GetOrCreateStorage(Key, Factory);
+	}
+
+	void FRegistry::ForEachStorage(TFunctionRef<void(const FComponentKey&, const IStorage&)> Func) const
+	{
+		check (Impl.IsValid());
+		return Impl->ForEachStorage(Func);
 	}
 }

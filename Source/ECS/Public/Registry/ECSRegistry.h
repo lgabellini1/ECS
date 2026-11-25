@@ -40,6 +40,8 @@ namespace ECS
 
 		template <component T>
 		T& GetChecked(FEntity);
+
+		int32 NumEntities() const;
 		
 		template <component T>
 		TComponentStorage<T>* GetStorage() const;
@@ -47,6 +49,8 @@ namespace ECS
 		template <component T>
 		TComponentStorage<T>& GetOrCreateStorage();
 		IStorage&			  GetOrCreateStorage(FComponentKey, FStorageFactory);
+
+		void ForEachStorage(TFunctionRef<void(const FComponentKey&, const IStorage&)>) const;
 	private:
 		TPimplPtr<FRegistryImpl> Impl;
 		

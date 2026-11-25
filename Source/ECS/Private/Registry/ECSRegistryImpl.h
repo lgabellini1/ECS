@@ -30,9 +30,13 @@ namespace ECS
 
 		template <component T>
 		T* Get(FEntity);
+
+		int32 NumEntities() const;
 		
 		IStorage* GetStorage(FComponentKey) const;
 		IStorage& GetOrCreateStorage(FComponentKey, FStorageFactory);
+
+		void ForEachStorage(TFunctionRef<void(const FComponentKey&, const IStorage&)>) const;
 	private:
 		FEntityManager    Entities;
 		FComponentManager Components;

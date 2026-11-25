@@ -16,6 +16,8 @@ public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Tick(float DeltaTime) override;
 
+	virtual TStatId GetStatId() const override;
+
 	ECS::FEntity CreateEntity();
 	void		 DestroyEntity(ECS::FEntity);
 
@@ -30,6 +32,8 @@ private:
 	ECS::FScheduler	Scheduler;
 	
 	void SetupSystemsProvider();
+
+	void PrintScreenDiagnostics() const;
 };
 
 template <ECS::component T>

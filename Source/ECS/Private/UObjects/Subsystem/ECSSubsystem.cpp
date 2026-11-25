@@ -2,6 +2,8 @@
 #include "System/ECSSystemRegistration.h"
 #include "StructUtils/InstancedStruct.h"
 #include "ECSAutoRegistrationUTH.h"
+#include "Debug/CVars/ECSConsoleVars.h"
+#include "Debug/ECSDebugInfo.h"
 
 void UECSSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
@@ -12,6 +14,14 @@ void UECSSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 void UECSSubsystem::Tick(float DeltaTime)
 {
 	Scheduler.Update(Registry, DeltaTime);
+#if WITH_EDITOR
+	PrintScreenDiagnostics();
+#endif
+}
+
+TStatId UECSSubsystem::GetStatId() const
+{
+	RETURN_QUICK_DECLARE_CYCLE_STAT(UECSSubsystem, STATGROUP_Tickables);
 }
 
 ECS::FEntity UECSSubsystem::CreateEntity()
@@ -44,4 +54,19 @@ void UECSSubsystem::SetupSystemsProvider()
 	{
 		Provider.ExecuteIfBound(Registrar);
 	});
+}
+
+void UECSSubsystem::PrintScreenDiagnostics() const
+{
+	if (!GEngine) return;
+	
+	if (ECS::CVarEnableScreenDiagnostics.GetValueOnGameThread() == 1)
+	{
+		const FString& DebugMessage = ConstructDebugMessage(Registry);
+		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.f, FColor::Turquoise, DebugMessage);
+	}
+	else
+	{
+		GEngine->ClearOnScreenDebugMessages();
+	}
 }

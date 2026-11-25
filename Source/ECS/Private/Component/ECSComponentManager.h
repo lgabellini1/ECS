@@ -26,6 +26,8 @@ namespace ECS
 
 		IStorage* GetStorage(FComponentKey) const;
 		IStorage& GetOrCreateStorage(FComponentKey, FStorageFactory);  
+		
+		void ForEachStorage(TFunctionRef<void(const FComponentKey&, const IStorage&)>) const;
 	private:
 		// ptr-to-base-interface pattern required because the set of types is open-ended
 		TArray<TUniquePtr<IStorage>> Storages;

@@ -14,6 +14,8 @@ namespace ECS
 
 		int32 Num() const { return Dense.Num(); }
 		const TArray<FEntity>& Entities() const { return Dense; }
+
+		SIZE_T Size() const { return Sparse.GetAllocatedSize() + Dense.GetAllocatedSize(); }
 	private:
 		TArray<FEntity> Sparse;
 		TArray<FEntity> Dense;

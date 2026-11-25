@@ -38,4 +38,12 @@ namespace ECS
 		KeyToIndex.Add(Key, NewIndex);
 		return *Storages[NewIndex];
 	}
+
+	void FComponentManager::ForEachStorage(TFunctionRef<void(const FComponentKey&, const IStorage&)> Func) const
+	{
+		for (const TPair<FComponentKey, int32>& Pair : KeyToIndex)
+		{
+			Func(Pair.Key, *Storages[Pair.Value]);
+		}
+	}
 }
