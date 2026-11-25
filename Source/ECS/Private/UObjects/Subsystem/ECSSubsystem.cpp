@@ -29,7 +29,7 @@ void UECSSubsystem::SetupSystemsProvider()
 		return Scheduler.Add(MoveTemp(System));
 	};
 
-	ECS::FSystemRegistrar Registrar(Sink);
+	ECS::FSystemRegistrar Registrar(Sink, GetWorld());
 
 	ECS::ForEachProvider([&](const ECS::FSystemsProvider& Provider)
 	{

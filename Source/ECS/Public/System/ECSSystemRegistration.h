@@ -9,14 +9,15 @@ namespace ECS
 	public:
 		using FSink = TFunctionRef<ISystem&(TUniquePtr<ISystem>)>;
 		
-		explicit FSystemRegistrar(const FSink& InSink)
-			: Sink(InSink)
+		explicit FSystemRegistrar(const FSink& InSink, UWorld* InWorld)
+			: Sink(InSink), World(InWorld)
 		{}
 
 		template <typename TSystem, typename... TArgs>
 		TSystem& Add(TArgs&&... Args);
 	private:
-		FSink Sink;
+		FSink   Sink;
+		UWorld* World;
 	};
 
 	DECLARE_DELEGATE_OneParam(FSystemsProvider, FSystemRegistrar&);
