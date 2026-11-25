@@ -3,7 +3,10 @@
 namespace ECS
 {
 	// Custom typeid to use without RTTI (disabled in Unreal).
-	// These are NOT stable across boundaries!
+	
+	// These are NOT stable across boundaries, meaning that, in any case
+	// one should not expect a type to have the same id inside and outside
+	// the plugin. They work fine for internal use only though.
 
 	namespace Private
 	{
