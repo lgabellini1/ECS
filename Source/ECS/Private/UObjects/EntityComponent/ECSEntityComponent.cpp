@@ -5,18 +5,22 @@ void UECSEntityComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (auto* Subsystem = GetWorld()->GetSubsystem<UECSSubsystem>())
+	if (auto* ECS = GetWorld()->GetSubsystem<UECSSubsystem>())
 	{
-		Entity = Subsystem->CreateEntity();
+		Entity = ECS->CreateEntity();
+		for (const FInstancedStruct& Struct : Components)
+		{
+			ECS->AddComponentToEntity(Entity, Struct);
+		}
 	}
 }
 
 void UECSEntityComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-	if (auto* Subsystem =
+	if (auto* ECS =
 		GetWorld() ? GetWorld()->GetSubsystem<UECSSubsystem>() : nullptr)
 	{
-		Subsystem->DestroyEntity(Entity);
+		ECS->DestroyEntity(Entity);
 	}
 
 	Entity = ECS::FEntity::Null;

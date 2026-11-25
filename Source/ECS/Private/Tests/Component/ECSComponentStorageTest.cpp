@@ -2,8 +2,11 @@
 #include "Algo/Contains.h"
 #include "Storage/ECSComponentStorage.h"
 #include "Entity/ECSEntityConsts.h"
+#include "UObjects/Subsystem/ECSAutoRegistrationUTH.h"
 
 using namespace ECS;
+
+static_assert(sizeof(TComponentStorage<FTestComponentInt>) == sizeof(FTypeErasedStorage));
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FComponentStorage_HasRefusesNullForAnyGeneration,
 	"ECS::ComponentStorage::HasRefusesNullForAnyGeneration", TestFlags);
@@ -71,5 +74,36 @@ bool FComponentStorage_NoDuplication::RunTest(const FString& Parameters)
 	Storage.Add(Entity, FTestComponentInt(1));
 	TestEqual(TEXT("Storage count stays one"), Storage.Num(), 1);
 	
+	return true;
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FComponentStorage_TypedAndErasedAreSameStorage,
+	"ECS::ComponentStorage::TypedAndErasedAreSameStorage", TestFlags)
+
+bool FComponentStorage_TypedAndErasedAreSameStorage::RunTest(const FString& Parameters)
+{
+	auto [ Registry, Impl ] = MakeTestRegistry();
+
+	TComponentStorage<FTestComponentInt>& Typed = Registry.GetOrCreateStorage<FTestComponentInt>();
+	FTypeErasedStorage& Erased = EnsureStorage(Registry, FTestComponentInt::StaticStruct());
+
+	TestTrue(TEXT("Same object"), static_cast<IStorage*>(&Erased) == static_cast<IStorage*>(&Typed));
+	TestTrue(TEXT("Registry resolves to it"),
+		Impl->GetStorage(KeyOf<FTestComponentInt>()) == static_cast<IStorage*>(&Erased));
+	
+	const FEntity E1(1, 0), E2(2, 0), E3(3, 0);
+	FTestComponentInt V1(1), V2(2), V3(3);
+
+	FTestComponentInt* P1 = &Typed.Add(E1, V1);
+	TestTrue(TEXT("Typed Add() seen by erased"), Erased.GetRaw(E1) == P1);
+
+	void* P2 = Erased.AddRaw(E2, &V2);
+	TestTrue(TEXT("Erased Add() seen by typed"), Typed.Get(E2) == P2);
+	TestTrue(TEXT("Payload stays intact"), Typed.Get(E2)->Value == V2.Value);
+
+	Erased.Remove(E1);
+	TestFalse(TEXT("Erased remove() seen by typed"), Typed.Has(E1));
+	TestEqual(TEXT("Num agrees between typed and erased"), Typed.Num(), Erased.Num());
+		
 	return true;
 }

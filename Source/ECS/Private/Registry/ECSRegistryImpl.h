@@ -23,8 +23,7 @@ namespace ECS
 
 		template <component T>
 		void Remove(FEntity);
-
-		void Remove(FEntity, uint32 TypeId);
+		void Remove(FEntity, FComponentKey);
 
 		template <component T>
 		bool Has(FEntity);
@@ -32,8 +31,8 @@ namespace ECS
 		template <component T>
 		T* Get(FEntity);
 		
-		IStorage* GetStorage(uint32 TypeId) const;
-		IStorage& GetOrCreateStorage(uint32 TypeId, FStorageFactory);
+		IStorage* GetStorage(FComponentKey) const;
+		IStorage& GetOrCreateStorage(FComponentKey, FStorageFactory);
 	private:
 		FEntityManager    Entities;
 		FComponentManager Components;

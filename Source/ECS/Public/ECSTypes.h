@@ -29,13 +29,6 @@ namespace ECS
 
 	static_assert(sizeof(FEntity) == 4);
 
-	class ECS_API IStorage
-	{
-	public:
-		virtual ~IStorage() = default;
-		virtual void Remove(FEntity) = 0;
-	};
-
 	class ECS_API ISystem
 	{
 	public:

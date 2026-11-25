@@ -14,7 +14,7 @@ namespace ECS
 	template <component T>
 	void FRegistryImpl::Remove(FEntity Entity)
 	{
-		return Remove(Entity, TypeId<T>());
+		return Remove(Entity, KeyOf<T>());
 	}
 
 	template <component T>

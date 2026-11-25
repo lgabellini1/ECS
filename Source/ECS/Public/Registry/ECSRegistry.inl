@@ -7,10 +7,8 @@ namespace ECS
 	template <component T>
 	T& FRegistry::Add(FEntity Entity, T Component)
 	{
-		check (IsAlive(Entity));
-		auto& Storage = static_cast<TComponentStorage<T>&>(
-			GetOrCreateStorageInternal(TypeId<T>(), &TComponentStorage<T>::Make)
-		);
+		check(IsAlive(Entity));
+		TComponentStorage<T>& Storage = GetOrCreateStorage<T>();
 		return Storage.Add(Entity, MoveTemp(Component));
 	}
 	
@@ -52,7 +50,18 @@ namespace ECS
 	TComponentStorage<T>* FRegistry::GetStorage() const
 	{
 		return static_cast<TComponentStorage<T>*>(
-			GetStorageInternal(TypeId<T>())
+			GetStorageInternal(KeyOf<T>())
+		);
+	}
+
+	template <component T>
+	TComponentStorage<T>& FRegistry::GetOrCreateStorage()
+	{
+		return static_cast<TComponentStorage<T>&>(
+			GetOrCreateStorage(
+				KeyOf<T>(),
+				[]() { return TComponentStorage<T>::Make(); }
+			)
 		);
 	}
 }

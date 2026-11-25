@@ -43,11 +43,14 @@ namespace ECS
 		
 		template <component T>
 		TComponentStorage<T>* GetStorage() const;
+
+		template <component T>
+		TComponentStorage<T>& GetOrCreateStorage();
+		IStorage&			  GetOrCreateStorage(FComponentKey, FStorageFactory);
 	private:
 		TPimplPtr<FRegistryImpl> Impl;
 		
-		IStorage* GetStorageInternal(uint32 TypeId) const;
-		IStorage& GetOrCreateStorageInternal(uint32 TypeId, FStorageFactory Factory);
+		IStorage* GetStorageInternal(FComponentKey) const;
 	};
 }
 

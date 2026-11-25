@@ -2,9 +2,9 @@
 
 namespace ECS
 {
-	void FComponentManager::RemoveFromStorage(FEntity Entity, uint32 TypeId)
+	void FComponentManager::RemoveFromStorage(FEntity Entity, FComponentKey Key)
 	{
-		if (auto* Storage = GetStorage(TypeId))
+		if (auto* Storage = GetStorage(Key))
 		{
 			Storage->Remove(Entity);
 		}
@@ -21,25 +21,21 @@ namespace ECS
 		}
 	}
 	
-	IStorage* FComponentManager::GetStorage(uint32 TypeId) const
+	IStorage* FComponentManager::GetStorage(FComponentKey Key) const
 	{
-		return Storages.IsValidIndex(TypeId) && Storages[TypeId]
-			? Storages[TypeId].Get()
-			: nullptr;
+		const int32* Index = KeyToIndex.Find(Key);
+		return Index ? Storages[*Index].Get() : nullptr;
 	}
 
-	IStorage& FComponentManager::GetOrCreateStorage(uint32 TypeId, FStorageFactory Factory)
+	IStorage& FComponentManager::GetOrCreateStorage(FComponentKey Key, FStorageFactory Factory)
 	{
-		if (Storages.Num() <= static_cast<int32>(TypeId))
+		if (const int32* Index = KeyToIndex.Find(Key))
 		{
-			Storages.SetNum(static_cast<int32>(TypeId) + 1);
+			return *Storages[*Index];
 		}
-		TUniquePtr<IStorage>& Slot = Storages[TypeId];
-		if (!Slot)
-		{
-			Slot = Factory();
-			check(Slot.IsValid());
-		}
-		return *Slot;
+
+		const int32 NewIndex = Storages.Add(Factory());
+		KeyToIndex.Add(Key, NewIndex);
+		return *Storages[NewIndex];
 	}
 }

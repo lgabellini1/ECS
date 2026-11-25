@@ -5,6 +5,8 @@
 #include "System/ECSScheduler.h"
 #include "ECSSubsystem.generated.h"
 
+struct FInstancedStruct;
+
 UCLASS()
 class UECSSubsystem final : public UTickableWorldSubsystem
 {
@@ -18,7 +20,8 @@ public:
 	void		 DestroyEntity(ECS::FEntity);
 
 	template <ECS::component T>
-	T* AddComponentToEntity(ECS::FEntity, T Component = T());
+	T*    AddComponentToEntity(ECS::FEntity, T Component = T());
+	void* AddComponentToEntity(ECS::FEntity, const FInstancedStruct&);
 	
 	template <ECS::component T>
 	T* GetComponent(ECS::FEntity);

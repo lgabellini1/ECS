@@ -15,7 +15,7 @@ namespace ECS
 		template <component T>
 		T& AddToStorage(FEntity, T Component = T());
 		
-		void RemoveFromStorage(FEntity, uint32 TypeId);
+		void RemoveFromStorage(FEntity, FComponentKey);
 		void RemoveFromAllStorages(FEntity);
 
 		template <component T>
@@ -24,11 +24,12 @@ namespace ECS
 		template <component T>
 		T* Get(FEntity);
 
-		IStorage* GetStorage(uint32 TypeId) const;
-		IStorage& GetOrCreateStorage(uint32 TypeId, FStorageFactory);  
+		IStorage* GetStorage(FComponentKey) const;
+		IStorage& GetOrCreateStorage(FComponentKey, FStorageFactory);  
 	private:
 		// ptr-to-base-interface pattern required because the set of types is open-ended
 		TArray<TUniquePtr<IStorage>> Storages;
+		TMap<FComponentKey, int32> KeyToIndex;
 	};
 }
 

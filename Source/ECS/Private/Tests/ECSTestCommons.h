@@ -1,15 +1,17 @@
 #pragma once
 #include "Misc/AutomationTest.h"
-#include "ECSTypes.h"
 #include "Registry/ECSRegistryImpl.h"
 #include "Registry/ECSRegistry.h"
+#include "ECSTestCommons.generated.h"
 
 using namespace ECS;
 
 constexpr EAutomationTestFlags TestFlags = EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter;
 
-struct FTestComponentInt   { int32 Value; };
-struct FTestComponentFloat { float Value; };
+USTRUCT()
+struct FTestComponentInt   { GENERATED_BODY() int32 Value; };
+USTRUCT()
+struct FTestComponentFloat { GENERATED_BODY() float Value; };
 
 struct FTestRegistry
 {
@@ -17,7 +19,7 @@ struct FTestRegistry
 	FRegistryImpl* Impl;
 };
 
-inline auto MakeTestRegistry()
+inline FTestRegistry MakeTestRegistry()
 {
 	auto Impl = MakePimpl<FRegistryImpl>();
 	FRegistryImpl* RawImpl = Impl.Get();

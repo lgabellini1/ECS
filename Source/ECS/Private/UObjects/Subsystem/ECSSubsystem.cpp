@@ -1,5 +1,7 @@
 ﻿#include "UObjects/Subsystem/ECSSubsystem.h"
 #include "System/ECSSystemRegistration.h"
+#include "StructUtils/InstancedStruct.h"
+#include "ECSAutoRegistrationUTH.h"
 
 void UECSSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
@@ -20,6 +22,13 @@ ECS::FEntity UECSSubsystem::CreateEntity()
 void UECSSubsystem::DestroyEntity(ECS::FEntity Entity)
 {
 	Registry.Destroy(Entity);
+}
+
+void* UECSSubsystem::AddComponentToEntity(ECS::FEntity Entity, const FInstancedStruct& Struct)
+{
+	const UScriptStruct* T = Struct.GetScriptStruct();
+	return T ? ECS::EnsureStorage(Registry, T).AddRaw(Entity, Struct.GetMemory())
+			 : nullptr;
 }
 
 void UECSSubsystem::SetupSystemsProvider()

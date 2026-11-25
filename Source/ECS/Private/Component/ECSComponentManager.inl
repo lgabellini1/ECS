@@ -9,14 +9,14 @@ namespace ECS
 	T& FComponentManager::AddToStorage(FEntity Entity, T Component)
 	{
 		auto& Storage = static_cast<TComponentStorage<T>&>(
-			GetOrCreateStorage(TypeId<T>(), &TComponentStorage<T>::Make));
+			GetOrCreateStorage(KeyOf<T>(), &TComponentStorage<T>::Make));
 		return Storage.Add(Entity, MoveTemp(Component));
 	}
 
 	template <component T>
 	T* FComponentManager::Get(FEntity Entity)
 	{
-		IStorage* Storage = GetStorage(TypeId<T>());
+		IStorage* Storage = GetStorage(KeyOf<T>());
 		return Storage
 			? static_cast<TComponentStorage<T>*>(Storage)->Get(Entity)
 			: nullptr;
@@ -26,7 +26,7 @@ namespace ECS
 	bool FComponentManager::Has(FEntity Entity) const
 	{
 		auto Storage = static_cast<const TComponentStorage<T>*>(
-			GetStorage(TypeId<T>())
+			GetStorage(KeyOf<T>())
 		);
 		return Storage && Storage->Has(Entity);
 	}

@@ -15,8 +15,8 @@ bool FRegistryTest_EntitiesComponentsMatch::RunTest(const FString& Parameters)
 	Registry.Destroy(Entity);
 	
 	TestFalse(TEXT("Entity is not found in components"), Registry.Has<FTestComponentInt>(Entity));
-	auto Storage = static_cast<TComponentStorage<FTestComponentInt>*>(
-		Registry.GetStorage(TypeId<FTestComponentInt>())
+	const auto Storage = static_cast<TComponentStorage<FTestComponentInt>*>(
+		Registry.GetStorage(KeyOf<FTestComponentInt>())
 	);
 	TestFalse(TEXT("Entity is not found in components"), Storage->Has(Entity));
 	return true;

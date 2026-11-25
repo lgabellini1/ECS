@@ -21,21 +21,21 @@ namespace ECS
 		return Entities.IsAlive(Entity);
 	}
 
-	void FRegistryImpl::Remove(FEntity Entity, uint32 TypeId)
+	void FRegistryImpl::Remove(FEntity Entity, FComponentKey Key)
 	{
 		if (IsAlive(Entity))
 		{
-			Components.RemoveFromStorage(Entity, TypeId);
+			Components.RemoveFromStorage(Entity, Key);
 		}
 	}
 	
-	IStorage* FRegistryImpl::GetStorage(uint32 TypeId) const
+	IStorage* FRegistryImpl::GetStorage(FComponentKey Key) const
 	{
-		return Components.GetStorage(TypeId);
+		return Components.GetStorage(Key);
 	}
 
-	IStorage& FRegistryImpl::GetOrCreateStorage(uint32 TypeId, FStorageFactory Factory)
+	IStorage& FRegistryImpl::GetOrCreateStorage(FComponentKey Key, FStorageFactory Factory)
 	{
-		return Components.GetOrCreateStorage(TypeId, Factory);
+		return Components.GetOrCreateStorage(Key, Factory);
 	}
 }

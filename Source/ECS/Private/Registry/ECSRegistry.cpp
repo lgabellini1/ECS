@@ -31,14 +31,15 @@ namespace ECS
 		return Impl->IsAlive(Entity);
 	}
 
-	IStorage* FRegistry::GetStorageInternal(uint32 TypeId) const
+	IStorage* FRegistry::GetStorageInternal(FComponentKey Key) const
 	{
 		check (Impl.IsValid());
-		return Impl->GetStorage(TypeId);
+		return Impl->GetStorage(Key);
 	}
 
-	IStorage& FRegistry::GetOrCreateStorageInternal(uint32 TypeId, FStorageFactory Factory)
+	IStorage& FRegistry::GetOrCreateStorage(FComponentKey Key, FStorageFactory Factory)
 	{
-		return Impl->GetOrCreateStorage(TypeId, Factory);
+		check (Impl.IsValid());
+		return Impl->GetOrCreateStorage(Key, Factory);
 	}
 }
